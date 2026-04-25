@@ -40,43 +40,63 @@ public class ringPing {
         // Declare Variables For the Casino Slot Simulation
         // Start with The Variables for the Reels
 
+        // Scanner for user input
+        Scanner scanner = new Scanner(System.in);
+
         String cherryWheel;
         String bellWheel;
         String sevenWheel;
 
         int spins = 9;
-        int weightedTokenThreeCherries = 1;
-        int weightedTokenThreeBells = 2;
-        int weightedTokenThreeSevens = 3;
+        int weightedTokenThreeCherries = 3;
+        int weightedTokenThreeBells = 5;
+        int weightedTokenThreeSevens = 7;
+
+        int spin;
+        int tokensWon = 0;
 
         String[] symbols = {"symbol_1", "symbol_2", "symbol_3"};
 
 
         do  {
             System.out.println("Spins Remaining: " + spins);
+            
+            
+            spin = scanner.nextInt();
+
             System.out.println("Spinning the reels...");
-            System.out.println("Reel 1: " + reel_1());
-            System.out.println("Reel 2: " + reel_2());
-            System.out.println("Reel 3: " + reel_3());
+            
+            
             
             symbols[0] = reel_1();
             symbols[1] = reel_2();
             symbols[2] = reel_3();
-            
-            if(symbols[0].equals(symbols[1]) && symbols[1].equals(symbols[2])) {
-                if (symbols[0].equals("Cherry")) {
-                    System.out.println("Congratulations! You won " + weightedTokenThreeCherries + " token(s) for 3 cherries!");
-                } else if (symbols[0].equals("Bell")) {
-                    System.out.println("Congratulations! You won " + weightedTokenThreeBells + " token(s) for 3 bells!");
-                } else if (symbols[0].equals("Seven")) {
-                    System.out.println("Congratulations! You won " + weightedTokenThreeSevens + " token(s) for 3 sevens!");
-                }
+
+            System.out.println("Reel 1: " + symbols[0]);
+            System.out.println("Reel 2: " + symbols[1]);
+            System.out.println("Reel 3: " + symbols[2]);
+
+            // If all three symbols are the same, then a weighted token is won.  If there are 2 of a kind, then no token is won, 
+            // and if a cherry is in the virtual reel, you get a bonus spin.
+
+            // If symbols are three of a kind, then a weighted token is won.  If there are 2 of a kind, then no token is won, and if a cherry is in the virtual reel, you get a bonus spin.
+            if(symbols[0].equals("Cherry") && symbols[1].equals("Cherry") && symbols[2].equals("Cherry")) {
+                System.out.println("Congratulations! You won " + weightedTokenThreeCherries + " token(s) for 3 cherries!");
+                tokensWon += weightedTokenThreeCherries;
+            } else if (symbols[0].equals("Bell") && symbols[1].equals("Bell") && symbols[2].equals("Bell")) {
+                System.out.println("Congratulations! You won " + weightedTokenThreeBells + " token(s) for 3 bells!");
+                tokensWon += weightedTokenThreeBells;
+            } else if (symbols[0].equals("Seven") && symbols[1].equals("Seven") && symbols[2].equals("Seven")) {
+                System.out.println("Congratulations! You won " + weightedTokenThreeSevens + " token(s) for 3 sevens!");
+                tokensWon += weightedTokenThreeSevens;
             } else if (symbols[0].equals("Cherry") || symbols[1].equals("Cherry") || symbols[2].equals("Cherry")) {
                 spins++;
                 System.out.println("You got a cherry! You win a bonus spin!");
             }
+            
 
             spins--;
+            System.out.println("Total Tokens Won This Game are! " + tokensWon);
 
             display();
         } while (spins > 0);
